@@ -1,0 +1,32 @@
+# Manager decision policy. Written by the OWNER. Keep it tight at launch.
+# The Manager (and the code around it) can never approve outside these limits.
+
+[price]
+min_project = 150
+max_project = 600
+deposit_percent = 50          # required upfront, percent of price
+
+[scope]
+max_duration_days = 7
+max_revisions = 2
+allowed_types = ["automation script", "bug fix", "landing page", "data cleanup script", "small api integration"]
+
+[limits]
+max_open_commitments = 2      # concurrent signed jobs
+max_daily_new_commitments = 1
+max_total_commitment_value = 1500
+
+[terms]
+refund = "Full refund of deposit if work not started; no refund after delivery of work matching the agreed spec."
+payment = "50% deposit before work starts, balance on delivery."
+
+[banned_promises]
+# Case-insensitive regex patterns. Any outgoing text matching is blocked.
+patterns = [
+  "guarantee[ds]?\\b",
+  "100\\s*%\\s*(satisf|success)",
+  "unlimited\\s+(revisions|changes|support)",
+  "ranking|rank\\s+#?1|top\\s+of\\s+google",
+  "(make|earn)\\s+you\\s+\\$?\\d+",
+  "within\\s+\\d+\\s+hours?",
+]

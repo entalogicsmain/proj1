@@ -1,0 +1,58 @@
+# Main configuration. Secrets are NOT stored here (see docs/SETUP.md).
+
+[paths]
+db = "data/agent.db"
+kill_file = "data/KILL"
+policy = "config/policy.toml"
+prompts = "prompts"
+jobs_dir = "jobs"
+
+[caps]
+# Spend (USD) on paid APIs. Warn at 70%, pause at 100%.
+daily_spend = 5.0
+total_spend = 500.0
+warn_fraction = 0.70
+# Outreach
+daily_pitches = 15
+daily_linkedin = 3
+send_window_start = "09:00"   # local time, no sends outside window
+send_window_end = "17:00"
+followup_min_days = 3
+followup_max_days = 5
+lead_score_threshold = 7
+judge_max_fix_rounds = 2
+
+# Model router: change a model here, no code change needed.
+# provider: anthropic | deepseek | mock
+[models.worker_write]
+provider = "anthropic"
+model = "claude-sonnet-5-5"
+[models.worker_cheap]
+provider = "deepseek"
+model = "deepseek-v4-flash"
+[models.judge]
+provider = "deepseek"
+model = "deepseek-v4-pro"
+[models.manager_money]
+provider = "anthropic"
+model = "claude-opus-5-5"
+[models.manager_routine]
+provider = "anthropic"
+model = "claude-sonnet-5-5"
+[models.questioner]
+provider = "deepseek"
+model = "deepseek-v4-flash"
+
+# USD per 1M tokens. PLACEHOLDERS: verify against current pricing pages before launch.
+[pricing."claude-sonnet-5-5"]
+input = 3.0
+output = 15.0
+[pricing."claude-opus-5-5"]
+input = 15.0
+output = 75.0
+[pricing."deepseek-v4-flash"]
+input = 0.15
+output = 0.60
+[pricing."deepseek-v4-pro"]
+input = 0.60
+output = 2.40
